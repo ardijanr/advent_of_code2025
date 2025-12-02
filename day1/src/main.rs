@@ -1,48 +1,16 @@
-use std::char;
-
 struct Dial {
     current_num: i32,
     n_times_at_0: i32,
 }
 
 impl Dial {
-    fn turn_left(&mut self, n: i32) {
-        let old_0 = self.n_times_at_0;
-        if self.current_num <= n && self.current_num != 0 {
-            self.n_times_at_0 += 1;
-        }
-        self.n_times_at_0 += ((self.current_num - n) / 100).abs();
-        self.current_num = (100 + self.current_num - n % 100) % 100;
-
-        println!("--------------------------------VVVVV");
-        println!("Turn left: {n}");
-        dbg!(self.n_times_at_0 - old_0, n);
-    }
-
-    fn turn_right(&mut self, n: i32) {
-        let old_0 = self.n_times_at_0;
-
-        self.n_times_at_0 += (self.current_num + n) as i32 / 100;
-        self.current_num = (self.current_num + n) % 100;
-
-        // println!("Turn right: {n}");
-        // dbg!(self.n_times_at_0 - old_0, n);
-    }
-
     //6561
     fn turn_dial(&mut self, n: i32) {
-        // if self.current_num <= n.abs() && n < 0 {
-        //     self.n_times_at_0 += 1;
-        // }
         if self.current_num <= n.abs() && self.current_num != 0 && n < 0 {
             self.n_times_at_0 += 1;
         }
         self.n_times_at_0 += (self.current_num + n).abs() / 100;
         self.current_num = (100 + self.current_num + n % 100) % 100;
-
-        // if self.current_num == 0 {
-        //     self.n_times_at_0 += 1;
-        // }
     }
 }
 
@@ -67,39 +35,6 @@ fn parse(text: &str) {
 
 #[test]
 fn assertions() {
-    let mut d = Dial {
-        current_num: 11,
-        n_times_at_0: 0,
-    };
-
-    d.turn_right(8);
-
-    assert_eq!(d.current_num, 19);
-
-    d.turn_left(19);
-    assert_eq!(d.current_num, 0);
-    assert_eq!(d.n_times_at_0, 1);
-
-    d.turn_left(1);
-    assert_eq!(d.current_num, 99);
-    assert_eq!(d.n_times_at_0, 1);
-
-    let mut d = Dial {
-        current_num: 5,
-        n_times_at_0: 0,
-    };
-    d.turn_left(10);
-    assert_eq!(d.current_num, 95);
-    assert_eq!(d.n_times_at_0, 1);
-
-    d.turn_right(5);
-    assert_eq!(d.current_num, 0);
-    assert_eq!(d.n_times_at_0, 2);
-
-    d.turn_left(500);
-    assert_eq!(d.current_num, 0);
-    assert_eq!(d.n_times_at_0, 7);
-
     let mut d = Dial {
         current_num: 11,
         n_times_at_0: 0,
@@ -134,26 +69,10 @@ fn assertions() {
     assert_eq!(d.n_times_at_0, 7);
 }
 
-enum Dir {
-    Left,
-    Right,
-}
 fn main() {
     parse(TEXT);
 }
 
-const TEST_TEXT: &'static str = r#""
-L68
-L30
-R48
-L5
-R60
-L55
-L1
-L99
-R14
-L82
-""#;
 const TEXT: &'static str = r#""
 R21
 R37
