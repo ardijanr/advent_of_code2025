@@ -1,7 +1,7 @@
 fn main() {
     parse(INPUT);
 }
-
+// Correct answer: 22617871034
 fn parse(text: &str) {
     let mut invalid_ids: Vec<u64> = Vec::new();
     for (left, right) in text.split(',').map(|txt| {
