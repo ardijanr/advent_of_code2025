@@ -4,7 +4,7 @@ struct Dial {
 }
 
 impl Dial {
-    //6561
+    //correct answer: 6561
     fn turn_dial(&mut self, n: i32) {
         if self.current_num <= n.abs() && self.current_num != 0 && n < 0 {
             self.n_times_at_0 += 1;
